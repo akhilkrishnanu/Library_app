@@ -15,8 +15,9 @@ App.use(cors());
 const port=3000;
 
 //connection to MongoDB using mongoose
+const mongodbAtlas = "mongodb+srv://akhilku1:happyonam@cluster1.wvfjw.mongodb.net/?retryWrites=true&w=majority"
 const mongodb = "mongodb://localhost:27017/library";
-mongoose.connect(mongodb,{useNewUrlParser:true, useUnifiedTopology:true});
+mongoose.connect(mongodbAtlas || mongodb,{useNewUrlParser:true, useUnifiedTopology:true});
 var db = mongoose.connection;
 db.on("error",console.error.bind(console,'connection error'));
 db.once("open",()=>{

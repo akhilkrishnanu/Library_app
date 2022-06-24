@@ -1,0 +1,24 @@
+<div class="container">
+    <form (ngSubmit)="editbook()">
+        <div class="form-group">
+          <label for="exampleFormControlInput1">Book Name</label>
+          <input type="text" name="bookName" [(ngModel)]="book.bookName" class="form-control" id="exampleFormControlInput1" placeholder="eg: Harry Potter">
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlInput1">Author Name</label>
+            <input type="text" name="authorName" [(ngModel)]="book.authorName" class="form-control" id="exampleFormControlInput1" placeholder="eg: J K Rowling">
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlTextarea1">Book Description</label>
+            <textarea name="bookInfo" [(ngModel)]="book.bookInfo" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlFile1">Book Image</label>
+            <input type="file" name="bookImg" [(ngModel)]="book.bookImg" class="form-control-file" id="exampleFormControlFile1">
+        </div>
+        <button class="formbtn"> Update Book
+        </button>
+    </form>
+
+</div>
+

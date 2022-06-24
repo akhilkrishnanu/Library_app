@@ -47,7 +47,7 @@ App.route("/getbooks")
 });
 
 //get a book
-App.route("/getbook/:id")
+App.route("/book/:id")
 .get((req,res)=>{
  res.header("Access-Control-Allow-Origin","*");
  res.header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, PATCH");

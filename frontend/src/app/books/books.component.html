@@ -1,0 +1,73 @@
+
+<div class="container">
+    <div class="row">
+        <div class="col" *ngFor="let book of books">
+            <div class="container">
+                <section class="mx-auto my-5" style="max-width: 23rem;">
+                    <div class="card">
+                        <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+                            <img [src]="book.bookImg" class="img-fluid" />
+                            <!-- <img src="https://mdbootstrap.com/img/Photos/Horizontal/Food/8-col/img (5).jpg" class="img-fluid" /> -->
+                            <a href="#!">
+                            <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h4 class="card-title">
+                                <i class="fa-solid fa-book"></i>
+                                <strong> {{book.bookName}} </strong>
+                            </h4>
+                            <h5 class="card-title font-weight-bold">
+                                <i class="fa-solid fa-feather-pointed"></i>
+                                <a> {{book.authorName}} </a>
+                            </h5>
+                            <p class="card-text">
+                                {{book.bookInfo}}
+                            </p>
+                            <hr class="my-4" />
+                            <!-- edit -->
+                        <a class="px-2 fa-lg li-ic" (click)="editBook(book._id)"><i class="fa-solid fa-pen-to-square"></i></a>
+                        <!-- delete -->
+                        <a class="px-2 fa-lg tw-ic" (click)="deleteBook(book._id)"><i class="fa-solid fa-trash-can"></i></a>
+                        <!-- more -->
+                        <a class="px-2 fa-lg fb-ic"><i class="fa-solid fa-angles-right"></i></a>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+        <div class="col">
+            <div class="container">
+                <section class="mx-auto my-5" style="max-width: 23rem;">
+                    <div class="card">
+                        <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+                            <img src="https://mdbootstrap.com/img/Photos/Horizontal/Food/8-col/img (5).jpg" class="img-fluid" />
+                            <a href="#!">
+                            <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h4 class="card-title"><i class="fa-solid fa-book"></i><strong> BOOK NAME </strong></h4>
+                            <h5 class="card-title font-weight-bold"><i class="fa-solid fa-feather-pointed"></i><a> Author name </a></h5>
+                            <p class="card-text">
+                            Book Description - Some quick example text to build on the card title and make up the bulk of the
+                            card's content.
+                            </p>
+                            <hr class="my-4" />
+                            <!-- edit -->
+                        <a class="px-2 fa-lg li-ic"><i class="fa-solid fa-pen-to-square"></i></a>
+                        <!-- delete -->
+                        <a class="px-2 fa-lg tw-ic"><i class="fa-solid fa-trash-can"></i></a>
+                        <!-- more -->
+                        <a class="px-2 fa-lg fb-ic"><i class="fa-solid fa-angles-right"></i></a>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  
+ 
+  

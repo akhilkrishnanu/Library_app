@@ -1,0 +1,20 @@
+
+.card.booking-card.v-2 {
+  background-color: #c7f2e3;
+}
+
+.card.booking-card.v-2 .fa {
+  color: #f7aa00;
+}
+
+.card.booking-card.v-2 .card-body .card-text {
+  color: #db2d43;
+}
+
+.card.card.booking-card.v-2 .chip {
+  background-color: #87e5da;
+}
+
+.card.booking-card.v-2 .card-body hr {
+  border-top: 1px solid #f7aa00;
+}

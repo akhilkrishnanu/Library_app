@@ -1,0 +1,13 @@
+/* You can add global styles to this file, and also import other style files */
+body {
+    background-color: #f5f7fa;
+  }
+
+  body,h1 {font-family: "Raleway", sans-serif}
+body, html {height: 100%}
+.bgimg {
+  background-image: url('/frontend/src/assets/images/bg1.jpeg');
+  min-height: 100%;
+  background-position: center;
+  background-size: cover;
+}

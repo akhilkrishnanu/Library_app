@@ -2,7 +2,7 @@ var express = require("express");
 var mongoose = require("mongoose");
 const users = require("./src/models/usersModel");
 const books = require("./src/models/booksModel");
-
+const path = require('path');
 var cors = require("cors");
 const App =express();
 
@@ -10,6 +10,7 @@ const App =express();
 App.use(express.json());
 App.use(express.urlencoded({extended:true}));
 App.use(cors());
+App.use(express.static('./dist/library-app'));
 
 //port
 const port=3000;
@@ -32,7 +33,7 @@ App.listen(process.env.PORT || port,(err)=>{
 
 //routes
 //get all the books
-App.route("/getbooks")
+App.route("/api/getbooks")
 .get((req,res)=>{
  res.header("Access-Control-Allow-Origin","*");
  res.header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, PATCH");
@@ -48,7 +49,7 @@ App.route("/getbooks")
 });
 
 //get a book
-App.route("/book/:id")
+App.route("/api/book/:id")
 .get((req,res)=>{
  res.header("Access-Control-Allow-Origin","*");
  res.header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, PATCH");
@@ -66,7 +67,7 @@ App.route("/book/:id")
 });
 
 //add a book
-App.route("/addbook")
+App.route("/api/addbook")
 .post((req,res)=>{
  res.header("Access-Control-Allow-Origin","*");
  res.header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, PATCH");
@@ -86,7 +87,7 @@ book.save((err,data)=>{
 });
 
 //update a book
-App.route("/updatebook")
+App.route("/api/updatebook")
 .put((req,res)=>{
  res.header("Access-Control-Allow-Origin","*");
  res.header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, PATCH");
@@ -106,7 +107,7 @@ res.send(data);
 });
 
 //deletebook
-App.route("/deletebook/:id")
+App.route("/api/deletebook/:id")
 .delete((req,res)=>{
  res.header("Access-Control-Allow-Origin","*");
  res.header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, PATCH");
@@ -122,5 +123,6 @@ App.route("/deletebook/:id")
 
  })
 });
-//getusers
-//getuser
+app.get('/*', function(req, res) {
+    res.sendFile(path.join(__dirname + '/dist/library-app/index.html'));
+    });

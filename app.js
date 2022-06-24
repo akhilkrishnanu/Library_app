@@ -12,7 +12,7 @@ App.use(express.urlencoded({extended:true}));
 App.use(cors());
 
 //port
-// const port=3000;
+const port=3000;
 
 //connection to MongoDB using mongoose
 const mongodbAtlas = "mongodb+srv://akhilku1:happyonam@cluster1.wvfjw.mongodb.net/?retryWrites=true&w=majority"
@@ -25,7 +25,7 @@ db.once("open",()=>{
 });
 
 //connection to server
-App.listen(port,(err)=>{
+App.listen(process.env.PORT || port,(err)=>{
     if(err){console.log("err")}
     else{console.log("Connected to server")}
 });

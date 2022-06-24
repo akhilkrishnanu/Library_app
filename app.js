@@ -12,7 +12,7 @@ App.use(express.urlencoded({extended:true}));
 App.use(cors());
 
 //port
-const port=3000;
+// const port=3000;
 
 //connection to MongoDB using mongoose
 const mongodbAtlas = "mongodb+srv://akhilku1:happyonam@cluster1.wvfjw.mongodb.net/?retryWrites=true&w=majority"

@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const users = require("./src/models/usersModel");
 const books = require("./src/models/booksModel");
 const path = require('path');
+var bodyParser = require('body-parser');
 var cors = require("cors");
 const App =express();
 
@@ -12,7 +13,7 @@ App.use(express.json());
 App.use(express.urlencoded({extended:true}));
 App.use(cors());
 App.use(express.static('./dist/library-app'));
-
+App.use(bodyParser.json());
 //port
 const port=3000;
 

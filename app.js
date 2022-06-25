@@ -61,7 +61,7 @@ App.route("/api/getusers")
 .get((req,res)=>{
  res.header("Access-Control-Allow-Origin","*");
  res.header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, PATCH");
-users.find({},{_id:0,})
+users.find({},{_id:0,username:1})
 .then(data=>{
     res.send(data);
 })

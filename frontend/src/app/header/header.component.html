@@ -2,22 +2,25 @@
 
 
 
-<nav class="navbar navbar-expand-lg bg-secondary">
+<nav class="navbar navbar-expand-lg">
   <div class="container-fluid">
-    <a class="navbar-brand" routerLink="/">Home</a>
+    <a class="navbar-brand" routerLink="/" *ngIf="this.userservice.loggedIn()">Home</a>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" routerLink="books">Books</a>
+          <a class="nav-link" routerLink="books" *ngIf="this.userservice.loggedIn()">Books</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="add-book">Add Book</a>
+          <a class="nav-link" routerLink="add-book" *ngIf="this.userservice.loggedIn()">Add Book</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="login">Login</a>
+          <a class="nav-link" routerLink="login" *ngIf="!this.userservice.loggedIn()">Login</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="signup">Sign Up</a>
+          <a class="nav-link" (click)="logout()" *ngIf="this.userservice.loggedIn()">Logout</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="signup" *ngIf="!this.userservice.loggedIn()">Sign Up</a>
         </li>
       </ul>
     </div>

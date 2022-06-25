@@ -1,5 +1,6 @@
 var express = require("express");
 var mongoose = require("mongoose");
+const jwt = require("jsonwebtoken");
 const users = require("./src/models/usersModel");
 const books = require("./src/models/booksModel");
 const path = require('path');
@@ -31,10 +32,87 @@ App.listen(process.env.PORT || port,(err)=>{
     else{console.log("Connected to server")}
 });
 
-//routes
+function verifyToken(req,res,next){
+    if(!req.headers.authorization)
+    {
+        return res.status(401).send("UnAuthorized Request")
+
+    }
+    let token = req.headers.authorization.split(' ')[1];
+    if(token === "null")
+    {
+        return res.status(401).send("UnAuthorized Request")
+    }
+    let payload = jwt.verify(token,"secretkey")
+    if(!payload)
+    {   
+        return res.status(401).send("UnAuthorized Request");
+        
+    }
+    req.userId = payload.subject;
+    console.log(req.userId);
+    next();
+}
+
+//USER ROUTES
+
+// App.route("/getusers")
+App.route("/api/getusers")
+.get((req,res)=>{
+ res.header("Access-Control-Allow-Origin","*");
+ res.header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, PATCH");
+users.find({},{_id:0,username:1})
+.then(data=>{
+    res.send(data);
+})
+});
+
+// App.route("/signup")
+App.route("/api/signup")
+.post((req,res)=>{
+ res.header("Access-Control-Allow-Origin","*");
+ res.header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, PATCH");
+var user ={
+    username: req.body.user.username,
+    password: req.body.user.password
+}    
+console.log(user)
+var user = new users(user);
+user.save();
+})
+.get((req,res)=>{
+    res.send("Hello")
+})
+
+// App.route("/login")
+App.route("/api/login")
+.post((req,res)=>{
+    res.header("Access-Control-Allow-Origin","*");
+    res.header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, PATCH");
+    let name = req.body.user.username;
+    let password = req.body.user.password;
+    users.findOne({username:req.body.user.username, password:req.body.user.password},(err,user)=>{
+        if(err)
+        console.log(err)
+        if(user)
+        {
+            let payload = {subject:name+password};
+            let token = jwt.sign(payload,"secretkey");
+            console.log(token);
+            res.status(200).send({token});
+        }
+        else
+        res.status(401).json({
+            message:"Invalid credentials"
+        });
+    });
+})
+
+//BOOK ROUTES
+
 //get all the books
 App.route("/api/getbooks")
-.get((req,res)=>{
+.get(verifyToken, (req,res)=>{
  res.header("Access-Control-Allow-Origin","*");
  res.header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, PATCH");
  books.find({},(err,books)=>{
@@ -49,8 +127,8 @@ App.route("/api/getbooks")
 });
 
 //get a book
-App.route("/api/book/:id")
-.get((req,res)=>{
+App.route("/api/getbook/:id")
+.get(verifyToken, (req,res)=>{
  res.header("Access-Control-Allow-Origin","*");
  res.header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, PATCH");
  let bookid = req.params.id;
@@ -68,7 +146,7 @@ App.route("/api/book/:id")
 
 //add a book
 App.route("/api/addbook")
-.post((req,res)=>{
+.post(verifyToken, (req,res)=>{
  res.header("Access-Control-Allow-Origin","*");
  res.header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, PATCH");
 var newBook = {
@@ -88,7 +166,7 @@ book.save((err,data)=>{
 
 //update a book
 App.route("/api/updatebook")
-.put((req,res)=>{
+.put(verifyToken, (req,res)=>{
  res.header("Access-Control-Allow-Origin","*");
  res.header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, PATCH");
  var bookid = req.body.bookid;
@@ -108,7 +186,7 @@ res.send(data);
 
 //deletebook
 App.route("/api/deletebook/:id")
-.delete((req,res)=>{
+.delete(verifyToken, (req,res)=>{
  res.header("Access-Control-Allow-Origin","*");
  res.header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, PATCH");
  let bookid = req.params.id;
@@ -123,6 +201,7 @@ App.route("/api/deletebook/:id")
 
  })
 });
+
 App.get('/*', function(req, res) {
     res.sendFile(path.join(__dirname + '/dist/library-app/index.html'));
-    });
+});

@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
 export class BookService {
 
   constructor(private http:HttpClient) { }
-  server_address:String = 'api';
+  server_address: string = 'api';
   getbooks()
   {
     return this.http.get(`${this.server_address}/getbooks`);
@@ -24,7 +24,7 @@ export class BookService {
 
   addbook(book: any)
   {
-    return this.http.post(`${this.server_address}/addbook`,{"book":book});
+    return this.http.post<any>(`${this.server_address}/addbook`,{"book":book});
   }
 
   updatebook(book: any,bookid: any)

@@ -6,14 +6,16 @@ import { SignupComponent } from './signup/signup.component';
 import { BooksComponent } from './books/books.component';
 import { AddbookComponent } from './addbook/addbook.component';
 import { EditbookComponent } from './editbook/editbook.component';
+import { AuthGuard } from './auth.guard';
+
 
 const routes: Routes = [
-  {path:"login",component:LoginComponent},
   {path:"",component:HomeComponent},
+  {path:"login",component:LoginComponent},
   {path:"signup",component:SignupComponent},
-  {path:"books",component:BooksComponent},
-  {path:"add-book",component:AddbookComponent},
-  {path:"edit-book",component:EditbookComponent},
+  {path:"books", canActivate:[AuthGuard],component:BooksComponent},
+  {path:"add-book", canActivate:[AuthGuard],component:AddbookComponent},
+  {path:"edit-book", canActivate:[AuthGuard],component:EditbookComponent},
 ];
 
 @NgModule({

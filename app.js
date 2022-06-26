@@ -1,25 +1,25 @@
 var express = require("express");
 var mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
+const bodyParser = require('body-parser');
 const users = require("./src/models/usersModel");
 const books = require("./src/models/booksModel");
 const path = require('path');
-var bodyParser = require('body-parser');
 var cors = require("cors");
 const App =express();
 
 //Express Middlewares
 App.use(express.json());
+App.use(bodyParser.json());
 App.use(express.urlencoded({extended:true}));
 App.use(cors());
 App.use(express.static('./dist/library-app'));
-App.use(bodyParser.json());
+
 //port
 const port=3000;
 
 //connection to MongoDB using mongoose
-const mongodbAtlas = "mongodb+srv://akhilku1:happyonam@cluster1.wvfjw.mongodb.net/?retryWrites=true&w=majority"
-const mongodb = "mongodb://localhost:27017/library";
+const mongodbAtlas = process.env.MONGO_URI;
 mongoose.connect(mongodbAtlas || mongodb,{useNewUrlParser:true, useUnifiedTopology:true});
 var db = mongoose.connection;
 db.on("error",console.error.bind(console,'connection error'));
@@ -34,6 +34,7 @@ App.listen(process.env.PORT || port,(err)=>{
 });
 
 function verifyToken(req,res,next){
+    console.log("🚀 ~ file: app.js ~ line 38 ~ verifyToken ~ req.headers.authorization", req.headers.authorization)
     if(!req.headers.authorization)
     {
         return res.status(401).send("UnAuthorized Request")
@@ -45,6 +46,7 @@ function verifyToken(req,res,next){
         return res.status(401).send("UnAuthorized Request")
     }
     let payload = jwt.verify(token,"secretkey")
+    console.log("🚀 ~ file: app.js ~ line 49 ~ verifyToken ~ payload", payload)
     if(!payload)
     {   
         return res.status(401).send("UnAuthorized Request");
@@ -62,7 +64,7 @@ App.route("/api/getusers")
 .get((req,res)=>{
  res.header("Access-Control-Allow-Origin","*");
  res.header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, PATCH");
-users.find({},{_id:0,username:1})
+users.find()
 .then(data=>{
     res.send(data);
 })
@@ -99,7 +101,9 @@ App.route("/api/login")
         {
             let payload = {subject:name+password};
             let token = jwt.sign(payload,"secretkey");
-            console.log(token);
+            console.log("🚀 ~ file: app.js ~ line 104 ~ users.findOne ~ token", token)
+            console.log("🚀 ~ file: app.js ~ line 104 ~ users.findOne ~ payload", payload)
+            // console.log(token);
             res.status(200).send({token});
         }
         else

@@ -17,7 +17,7 @@
           <a class="nav-link" routerLink="login" *ngIf="!this.userservice.loggedIn()">Login</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" (click)="logout()" *ngIf="this.userservice.loggedIn()">Logout</a>
+          <a class="nav-link" routerLink="/" (click)="logout()" *ngIf="this.userservice.loggedIn()">Logout</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" routerLink="signup" *ngIf="!this.userservice.loggedIn()">Sign Up</a>
